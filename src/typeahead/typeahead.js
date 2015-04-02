@@ -106,7 +106,14 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         scope.activeIdx = -1;
         element.attr('aria-expanded', false);
       };
-
+      
+      var setNoResult = function(search) {
+          scope.matches = [{
+                isNoResult: true,
+                noResultText: "No results found for <strong>" + search + "</strong>"
+          }]
+      };
+      
       var getMatchId = function(index) {
         return popupId + '-option-' + index;
       };
@@ -155,7 +162,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
 
               element.attr('aria-expanded', true);
             } else {
-              resetMatches();
+              setNoResult(inputValue);
+              //resetMatches();
             }
           }
           if (onCurrentRequest) {
